@@ -140,7 +140,7 @@ class SQLAgent:
         response = self.llm_manager.invoke(prompt, question=question, sql_query=sql_query, results=results)
         
         lines = response.split('\n')
-        visualization = lines[0].split(': ')[1]
+        visualization = lines[0].split(': ')[1].strip()
         reason = lines[1].split(': ')[1]
 
         return {"visualization": visualization, "visualization_reason": reason}

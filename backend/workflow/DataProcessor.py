@@ -11,7 +11,7 @@ class DataProcessor:
     
     def format_data_for_visualization(self, state: dict) -> dict:
         """Format the data for the chosen visualization type."""
-        visualization = state['visualization']
+        visualization = state['visualization'].strip()
         results = state['results']
         user_query = state['user_query']
         sql_query = state['sql_query']
