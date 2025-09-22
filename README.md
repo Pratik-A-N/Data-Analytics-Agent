@@ -56,16 +56,6 @@ LANGGRAPH_API_URL='http://localhost:2024'
 
 3. Backend `.env` (Backend-specific configuration):
 ```bash
-DEBUG=false
-API_PREFIX=/api
-HOST=0.0.0.0
-PORT=8000
-```
-
-### Setting Up Environment Files
-
-1. Copy the example files to create your environment files:
-```bash
 PG_USER=postgres
 PG_PASS=postgres
 PG_HOST=db
@@ -77,6 +67,15 @@ MAX_ROWS_SERVER=5000
 DEEPSEEK_API_KEY=
 LANGSMITH_API_KEY=
 ALLOWED_ORIGINS=http://localhost:5173,http://localhost:3000
+```
+
+### Setting Up Environment Files
+
+1. Copy the example files to create your environment files:
+```bash
+copy .env.example .env
+copy frontend\.env.example frontend\.env
+copy backend\.env.example backend\.env
 ```
 
 2. Modify the values in each `.env` file according to your needs:
