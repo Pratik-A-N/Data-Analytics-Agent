@@ -1,5 +1,8 @@
 #  Data Analytics Agent - Containerized Application
 
+## Workflow Architecture
+<img width="521" height="553" alt="image" src="https://github.com/user-attachments/assets/bb2a20d5-4910-46aa-8818-da93fe44d71e" />
+
 This repository contains a containerized version of the  Data Analytics application, including the frontend, backend, and PostgreSQL database.
 
 ## Prerequisites
