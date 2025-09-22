@@ -1,5 +1,8 @@
 #  Data Analytics Agent - Containerized Application
 
+## Workflow Architecture
+<img width="521" height="553" alt="image" src="https://github.com/user-attachments/assets/bb2a20d5-4910-46aa-8818-da93fe44d71e" />
+
 This repository contains a containerized version of the  Data Analytics application, including the frontend, backend, and PostgreSQL database.
 
 ## Prerequisites
@@ -11,7 +14,7 @@ This repository contains a containerized version of the  Data Analytics applicat
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/Pratik-A-N/Data-Analytics-Agent.git
    cd NullAxis
    ```
 
@@ -46,16 +49,24 @@ POSTGRES_DB=nullaxis
 
 2. Frontend `.env` (Frontend-specific configuration):
 ```bash
-VITE_API_URL=http://localhost:8000
-VITE_APP_TITLE=Data Analytics Agent
+VITE_BACKEND_URL=http://localhost:8000
+LANGSMITH_API_KEY=
+LANGGRAPH_API_URL='http://localhost:2024'
 ```
 
 3. Backend `.env` (Backend-specific configuration):
 ```bash
-DEBUG=false
-API_PREFIX=/api
-HOST=0.0.0.0
-PORT=8000
+PG_USER=postgres
+PG_PASS=postgres
+PG_HOST=db
+PG_PORT=5432
+PG_DB=nullaxis
+QUERY_TIMEOUT=60
+MAX_QUERY_LENGTH=4000
+MAX_ROWS_SERVER=5000
+DEEPSEEK_API_KEY=
+LANGSMITH_API_KEY=
+ALLOWED_ORIGINS=http://localhost:5173,http://localhost:3000
 ```
 
 ### Setting Up Environment Files
