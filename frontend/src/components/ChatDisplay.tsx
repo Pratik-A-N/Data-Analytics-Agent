@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import Visualization from './Visualization';
 import VisualizationWithControls from './VizualizationWithControls';
 
 interface WorkflowResponse {

@@ -37,6 +37,14 @@ async def process_upload_file(upload_file: UploadFile) -> Dict[str, Any]:
     conn = get_raw_psycopg_conn()
     try:
         with conn.cursor() as cur:
+            # First ensure the master_data_repository table exists
+            cur.execute("""
+                CREATE TABLE IF NOT EXISTS master_data_repository (
+                file_name VARCHAR(255) PRIMARY KEY,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                row_count INTEGER
+                )
+            """)
             # Check if table exists in master_data_repository
             cur.execute("""
                 SELECT created_at 

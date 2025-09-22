@@ -1,0 +1,58 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"                # host:container -> host port 3000 maps to container 80
+    env_file:
+      - ./frontend/.env
+    depends_on:
+      - backend
+    environment:
+      # If your frontend is built/served in the container and the browser accesses it from host,
+      # then the browser will call host:8000. Keep this as localhost so browser uses host.
+      # If your frontend needs to call backend from *inside the container* (server-side), change to http://backend:8000
+      VITE_API_URL: "http://localhost:8000"
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - db
+    environment:
+      # Use docker-compose interpolation so the DATABASE_URL resolves using variables from env files or host .env
+      DATABASE_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}"
+      # Optional: pass explicit DB parts too if your code expects them separately
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRES_DB: "${POSTGRES_DB}"
+
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    ports:
+      - "5433:5432"               # map host 5433 -> container 5432 (avoids conflict with local Postgres on host:5432)
+    env_file:
+      - ./.env                    # this should contain POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRES_DB: "${POSTGRES_DB}"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  postgres_data:

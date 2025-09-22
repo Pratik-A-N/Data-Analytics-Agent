@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { saveAs } from "file-saver";
 import {
   Chart as ChartJS,
@@ -11,7 +11,6 @@ import {
   Tooltip,
   Legend,
   Title,
-  type LinearScaleOptions,
   type ScatterDataPoint,
   type ChartOptions
 } from "chart.js";
@@ -146,17 +145,22 @@ export default function VisualizationWithControls({ initialType = "bar", data }:
   const renderChart = () => {
     switch (chartType) {
       case "bar":
-        return <div style={{ height: 420 }}><Bar data={{ labels, datasets: activeDatasets }} options={barOptions} /></div>;
+        return <div style={{ height: 420 }}>
+          <Bar
+            data={{ labels, datasets: activeDatasets }}
+            options={barOptions as ChartOptions<"bar">}
+          />
+        </div>;
       case "horizontal_bar":
         // Chart.js v3 uses indexAxis = 'y' for horizontal bars
         return <div style={{ height: 420 }}>
           <Bar
             data={{ labels, datasets: activeDatasets }}
-            options={{ ...barOptions, indexAxis: "y" as const }}
+            options={{ ...barOptions, indexAxis: "y" } as ChartOptions<"bar">}
           />
         </div>;
       case "line":
-        return <div style={{ height: 420 }}><Line data={{ labels, datasets: activeDatasets }} options={commonOptions} /></div>;
+        return <div style={{ height: 420 }}><Line data={{ labels, datasets: activeDatasets }} options={commonOptions as ChartOptions<"line">} /></div>;
       case "pie":
         // pie uses single dataset - we sum/flatten across active series or use first
         const pieDataset = activeDatasets.length > 0 ? {
@@ -167,9 +171,22 @@ export default function VisualizationWithControls({ initialType = "bar", data }:
             backgroundColor: labels.map((_, i) => COLORS[i % COLORS.length]),
           }]
         } : { labels: [], datasets: [] };
-        return <div style={{ height: 420 }}><Pie data={pieDataset} options={{ ...commonOptions, maintainAspectRatio: true }} /></div>;
+        return <div style={{ height: 420 }}>
+          <Pie
+            data={pieDataset}
+            options={{
+              responsive: true,
+              maintainAspectRatio: true,
+              plugins: {
+                legend: { position: "top" },
+                title: { display: false },
+                tooltip: {},
+              },
+            }}
+          />
+        </div>;
       case "scatter":
-        return <div style={{ height: 420 }}><Scatter data={scatterData as any} options={commonOptions} /></div>;
+        return <div style={{ height: 420 }}><Scatter data={scatterData as any} options={commonOptions as ChartOptions<"scatter">} /></div>;
       default:
         return <div>Unsupported chart type</div>;
     }

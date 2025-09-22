@@ -7,7 +7,10 @@ interface WorkflowRequest {
 }
 
 interface WorkflowResponse {
-    response: string;
+    answer: string;
+    visualization: any;
+    visualization_reason: string;
+    formatted_data_for_visualization: any;
     // Add any other response properties from the backend
 }
 

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useTable } from '../context/TableContext';
 
 interface QueryInputProps {
   onSubmit: (query: string) => Promise<void>;
@@ -7,7 +6,6 @@ interface QueryInputProps {
 }
 
 const QueryInput: React.FC<QueryInputProps> = ({ onSubmit, isProcessing }) => {
-  const { tableId } = useTable();
   const [query, setQuery] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
