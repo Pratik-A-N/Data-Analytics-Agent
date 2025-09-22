@@ -11,7 +11,7 @@ This repository contains a containerized version of the  Data Analytics applicat
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone [<repository-url>](https://github.com/Pratik-A-N/Data-Analytics-Agent.git)
    cd NullAxis
    ```
 
