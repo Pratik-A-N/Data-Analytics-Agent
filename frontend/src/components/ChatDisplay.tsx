@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import VisualizationWithControls from './VizualizationWithControls';
+import { ErrorBoundary } from './ErrorBoundary';
 
 interface WorkflowResponse {
   answer: string;
@@ -94,10 +95,12 @@ const ChatDisplay: React.FC<ChatDisplayProps> = ({ messages, isProcessing }) => 
                       {message.visualization.visualization_reason}
                     </div>
                     {message.visualization.formatted_data_for_visualization && (
-                      <VisualizationWithControls 
-                        initialType="bar"
-                        data={message.visualization.formatted_data_for_visualization}
-                      />
+                      <ErrorBoundary>
+                        <VisualizationWithControls 
+                          initialType="bar"
+                          data={message.visualization.formatted_data_for_visualization}
+                        />
+                      </ErrorBoundary>
                     )}
                   </div>
                 )}
