@@ -46,8 +46,9 @@ POSTGRES_DB=nullaxis
 
 2. Frontend `.env` (Frontend-specific configuration):
 ```bash
-VITE_API_URL=http://localhost:8000
-VITE_APP_TITLE=Data Analytics Agent
+VITE_BACKEND_URL=http://localhost:8000
+LANGSMITH_API_KEY=
+LANGGRAPH_API_URL='http://localhost:2024'
 ```
 
 3. Backend `.env` (Backend-specific configuration):
@@ -62,9 +63,17 @@ PORT=8000
 
 1. Copy the example files to create your environment files:
 ```bash
-copy .env.example .env
-copy frontend\.env.example frontend\.env
-copy backend\.env.example backend\.env
+PG_USER=postgres
+PG_PASS=postgres
+PG_HOST=db
+PG_PORT=5432
+PG_DB=nullaxis
+QUERY_TIMEOUT=60
+MAX_QUERY_LENGTH=4000
+MAX_ROWS_SERVER=5000
+DEEPSEEK_API_KEY=
+LANGSMITH_API_KEY=
+ALLOWED_ORIGINS=http://localhost:5173,http://localhost:3000
 ```
 
 2. Modify the values in each `.env` file according to your needs:
